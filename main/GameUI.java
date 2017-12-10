@@ -2,9 +2,11 @@ package main;
 
 import java.awt.Component;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.Graphics;
 
 import javax.swing.JFrame;
+import javax.swing.SwingConstants;
 
 import javafx.beans.property.StringProperty;
 
@@ -91,6 +93,7 @@ public class GameUI {
 		for (int r = 0; r < ttlRow; r++) {
 			for (int c = 0; c < ttlCol; c++) {
 				// currentButton = buttonSet[r][c];
+
 				buttonSet[r][c] = new JButton();
 
 				statusMap[r][c] = "e";
@@ -98,7 +101,7 @@ public class GameUI {
 				frame.getContentPane().add(buttonSet[r][c]);
 
 				buttonSet[r][c].setUI(new MyButtonUI());
-				ImageIcon ico = new ImageIcon(System.getProperty("user.dir") + "\\res\\dirt.jpg");
+				ImageIcon ico = new ImageIcon(System.getProperty("user.dir") + "\\res\\dirt_huaji.jpg");
 				ico.setImage(ico.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
 				buttonSet[r][c].setIcon(ico);
 

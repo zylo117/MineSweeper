@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
 
 import tool.Point;
 import tool.RemoveDuplicateOffList;
@@ -39,7 +41,7 @@ final class LeftClick implements ActionListener {
 
 		if (GameUI.statusMap[buttonRow][buttonCol].equals("m")) {
 			// 标出你踩的雷，boom
-			ImageIcon ico = new ImageIcon(System.getProperty("user.dir") + "\\res\\boom.jpg");
+			ImageIcon ico = new ImageIcon(System.getProperty("user.dir") + "\\res\\boom_laji.jpg");
 			ico.setImage(ico.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
 			GameUI.buttonSet[buttonRow][buttonCol].setIcon(ico);
 			for (int r = 0; r < GameUI.ttlRow; r++) {
@@ -49,7 +51,8 @@ final class LeftClick implements ActionListener {
 
 					// 把其余所有没有点击的地雷灰度图显示出来，以示公平
 					if (GameUI.statusMap[r][c] == "m" && r != buttonRow && c != buttonCol) {
-						ImageIcon ico2 = new ImageIcon(System.getProperty("user.dir") + "\\res\\unrevealed_boom.jpg");
+						ImageIcon ico2 = new ImageIcon(
+								System.getProperty("user.dir") + "\\res\\unrevealed_boom_laji.jpg");
 						ico2.setImage(ico2.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
 						GameUI.buttonSet[r][c].setIcon(ico2);
 					}
@@ -62,7 +65,181 @@ final class LeftClick implements ActionListener {
 			ImageIcon ico = new ImageIcon(System.getProperty("user.dir") + "\\res\\empty.jpg");
 			ico.setImage(ico.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
 			GameUI.buttonSet[buttonRow][buttonCol].setIcon(ico);
+
+			// 把当前点改成已点击的状态0
+			GameUI.statusMap[buttonRow][buttonCol] = 0;
+
+			// 判断九宫格内是否有炸
+			int surroundingMines = judgeSurrounding(buttonCol, buttonRow);
+
+			System.out.println(surroundingMines);
+			// GameUI.buttonSet[buttonRow][buttonCol].setHorizontalTextPosition(SwingConstants.CENTER);
+			// GameUI.buttonSet[buttonRow][buttonCol].setFont(new Font("Calibri", Font.BOLD,
+			// 10));
+			// GameUI.buttonSet[buttonRow][buttonCol].setText(Integer.toString(surroundingMines));
+
+			ImageIcon num = new ImageIcon(
+					System.getProperty("user.dir") + "\\res\\number\\" + surroundingMines + ".jpg");
+			num.setImage(num.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
+			GameUI.buttonSet[buttonRow][buttonCol].setIcon(num);
 		}
+	}
+
+	private int judgeSurrounding(int buttonCol, int buttonRow) {
+		int surroundingMines = 0;
+
+		// 判断九宫格内是否有炸（雷）(中心)
+		if (buttonRow != 0 && buttonRow != GameUI.ttlRow - 1 && buttonCol != 0 && buttonCol != GameUI.ttlCol - 1) {
+			if (GameUI.statusMap[buttonRow - 1][buttonCol - 1].equals("m")) {
+				surroundingMines++;
+			}
+			if (GameUI.statusMap[buttonRow - 1][buttonCol].equals("m")) {
+				surroundingMines++;
+			}
+			if (GameUI.statusMap[buttonRow - 1][buttonCol + 1].equals("m")) {
+				surroundingMines++;
+			}
+			if (GameUI.statusMap[buttonRow][buttonCol - 1].equals("m")) {
+				surroundingMines++;
+			}
+			if (GameUI.statusMap[buttonRow][buttonCol + 1].equals("m")) {
+				surroundingMines++;
+			}
+			if (GameUI.statusMap[buttonRow + 1][buttonCol - 1].equals("m")) {
+				surroundingMines++;
+			}
+			if (GameUI.statusMap[buttonRow + 1][buttonCol].equals("m")) {
+				surroundingMines++;
+			}
+			if (GameUI.statusMap[buttonRow + 1][buttonCol + 1].equals("m")) {
+				surroundingMines++;
+			}
+		}
+
+		// 判断九宫格内是否有炸（雷）(四角)
+		// 左上角
+		if (buttonRow == 0 && buttonCol == 0) {
+			if (GameUI.statusMap[buttonRow][buttonCol + 1].equals("m")) {
+				surroundingMines++;
+			}
+			if (GameUI.statusMap[buttonRow + 1][buttonCol].equals("m")) {
+				surroundingMines++;
+			}
+			if (GameUI.statusMap[buttonRow + 1][buttonCol + 1].equals("m")) {
+				surroundingMines++;
+			}
+		}
+		// 右上角
+		if (buttonRow == 0 && buttonCol == GameUI.ttlCol - 1) {
+			if (GameUI.statusMap[buttonRow][buttonCol - 1].equals("m")) {
+				surroundingMines++;
+			}
+			if (GameUI.statusMap[buttonRow + 1][buttonCol].equals("m")) {
+				surroundingMines++;
+			}
+			if (GameUI.statusMap[buttonRow + 1][buttonCol - 1].equals("m")) {
+				surroundingMines++;
+			}
+		}
+		// 左下角
+		if (buttonRow == GameUI.ttlRow - 1 && buttonCol == 0) {
+			if (GameUI.statusMap[buttonRow][buttonCol + 1].equals("m")) {
+				surroundingMines++;
+			}
+			if (GameUI.statusMap[buttonRow - 1][buttonCol].equals("m")) {
+				surroundingMines++;
+			}
+			if (GameUI.statusMap[buttonRow - 1][buttonCol + 1].equals("m")) {
+				surroundingMines++;
+			}
+		}
+		// 右下角
+		if (buttonRow == GameUI.ttlRow - 1 && buttonCol == GameUI.ttlCol - 1) {
+			if (GameUI.statusMap[buttonRow][buttonCol - 1].equals("m")) {
+				surroundingMines++;
+			}
+			if (GameUI.statusMap[buttonRow - 1][buttonCol].equals("m")) {
+				surroundingMines++;
+			}
+			if (GameUI.statusMap[buttonRow - 1][buttonCol - 1].equals("m")) {
+				surroundingMines++;
+			}
+		}
+
+		// 判断九宫格内是否有炸（雷）(边缘)
+		// 上边
+		if (buttonRow == 0 && buttonCol != 0 && buttonCol != GameUI.ttlCol - 1) {
+			if (GameUI.statusMap[buttonRow][buttonCol - 1].equals("m")) {
+				surroundingMines++;
+			}
+			if (GameUI.statusMap[buttonRow][buttonCol + 1].equals("m")) {
+				surroundingMines++;
+			}
+			if (GameUI.statusMap[buttonRow + 1][buttonCol - 1].equals("m")) {
+				surroundingMines++;
+			}
+			if (GameUI.statusMap[buttonRow + 1][buttonCol].equals("m")) {
+				surroundingMines++;
+			}
+			if (GameUI.statusMap[buttonRow + 1][buttonCol + 1].equals("m")) {
+				surroundingMines++;
+			}
+		}
+		// 下边
+		if (buttonRow == GameUI.ttlRow - 1 && buttonCol != 0 && buttonCol != GameUI.ttlCol - 1) {
+			if (GameUI.statusMap[buttonRow][buttonCol - 1].equals("m")) {
+				surroundingMines++;
+			}
+			if (GameUI.statusMap[buttonRow][buttonCol + 1].equals("m")) {
+				surroundingMines++;
+			}
+			if (GameUI.statusMap[buttonRow - 1][buttonCol - 1].equals("m")) {
+				surroundingMines++;
+			}
+			if (GameUI.statusMap[buttonRow - 1][buttonCol].equals("m")) {
+				surroundingMines++;
+			}
+			if (GameUI.statusMap[buttonRow - 1][buttonCol + 1].equals("m")) {
+				surroundingMines++;
+			}
+		}
+		// 左边
+		if (buttonCol == 0 && buttonRow != 0 && buttonRow != GameUI.ttlRow - 1) {
+			if (GameUI.statusMap[buttonRow - 1][buttonCol].equals("m")) {
+				surroundingMines++;
+			}
+			if (GameUI.statusMap[buttonRow + 1][buttonCol].equals("m")) {
+				surroundingMines++;
+			}
+			if (GameUI.statusMap[buttonRow - 1][buttonCol + 1].equals("m")) {
+				surroundingMines++;
+			}
+			if (GameUI.statusMap[buttonRow][buttonCol + 1].equals("m")) {
+				surroundingMines++;
+			}
+			if (GameUI.statusMap[buttonRow + 1][buttonCol + 1].equals("m")) {
+				surroundingMines++;
+			}
+		}
+		// 右边
+		if (buttonCol == GameUI.ttlCol - 1 && buttonRow != 0 && buttonRow != GameUI.ttlRow - 1) {
+			if (GameUI.statusMap[buttonRow - 1][buttonCol].equals("m")) {
+				surroundingMines++;
+			}
+			if (GameUI.statusMap[buttonRow + 1][buttonCol].equals("m")) {
+				surroundingMines++;
+			}
+			if (GameUI.statusMap[buttonRow - 1][buttonCol - 1].equals("m")) {
+				surroundingMines++;
+			}
+			if (GameUI.statusMap[buttonRow][buttonCol - 1].equals("m")) {
+				surroundingMines++;
+			}
+			if (GameUI.statusMap[buttonRow + 1][buttonCol - 1].equals("m")) {
+				surroundingMines++;
+			}
+		}
+		return surroundingMines;
 	}
 
 	private void setMine(Point firstpoint) {
