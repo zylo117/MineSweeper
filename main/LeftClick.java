@@ -5,6 +5,7 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -40,10 +41,10 @@ final class LeftClick implements ActionListener {
 		GameUI.clickCount++;
 
 		// 对点击点以及其周围点判断
-		judgeOneBlock(buttonCol, buttonRow);
+		judgeThisBlock(buttonCol, buttonRow);
 	}
 
-	private void judgeOneBlock(int buttonCol, int buttonRow) {
+	private void judgeThisBlock(int buttonCol, int buttonRow) {
 		if (GameUI.statusMap[buttonRow][buttonCol].equals("m")) {
 
 			for (int r = 0; r < GameUI.ttlRow; r++) {
@@ -250,23 +251,24 @@ final class LeftClick implements ActionListener {
 	}
 
 	private void setMine(Point firstpoint) {
-		List<Point> mineLocationSet = new ArrayList<>();
+		HashSet<Point> mineLocationSet = new HashSet<>();
 		while (true) {
-			mineLocationSet = new ArrayList<>();
-			for (int i = 0; i < GameUI.mineQTY; i++) {
-				Point mineLocation = new Point((int) (Math.random() * GameUI.ttlRow),
-						(int) (Math.random() * GameUI.ttlCol));
+			Point mineLocation = new Point((int) (Math.random() * GameUI.ttlRow),
+					(int) (Math.random() * GameUI.ttlCol));
 
-				if (mineLocation.equals(firstpoint))
-					break;
+			if (mineLocation.equals(firstpoint))
+				continue;
 
-				mineLocationSet.add(mineLocation);
-				GameUI.statusMap[(int) mineLocation.y][(int) mineLocation.x] = "m";
-			}
-			RemoveDuplicateOffList.remove(mineLocationSet);
+			mineLocationSet.add(mineLocation);
+			
 			if (mineLocationSet.size() == GameUI.mineQTY)
 				break;
 		}
+		
+		for(Point mineLocation: mineLocationSet) {
+			GameUI.statusMap[(int) mineLocation.y][(int) mineLocation.x] = "m";
+		}
+		
 		if (GameUI.debug)
 			System.out.println(mineLocationSet);
 	}

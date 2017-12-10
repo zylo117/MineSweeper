@@ -29,7 +29,7 @@ public class GameUI {
 
 	public static int ttlRow = 10;
 	public static int ttlCol = 10;
-	public static int mineQTY = 10; // 建议不超过总数的10分之1
+	public static int mineQTY = 99; // 建议不超过总数的10分之1
 	public static boolean debug = true;
 	public static JButton[][] buttonSet = new JButton[ttlRow][ttlCol];
 	// public static int[][] indexMap = new int[ttlRow][ttlCol];
