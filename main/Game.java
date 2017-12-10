@@ -22,13 +22,13 @@ import tool.RemoveDuplicateOffList;
 
 public class Game {
 
-	public static int ttlRow = 10;
-	public static int ttlCol = 10;
+	public static int ttlRow = 3;
+	public static int ttlCol = 3;
 	public static int mineQTY = 5;
 	public static boolean debug = false;
 	public static JButton[][] buttonSet = new JButton[ttlRow][ttlCol];
 	// public static int[][] indexMap = new int[ttlRow][ttlCol];
-	public static boolean ifFirstClick = true;
+	public static int clickCount = 0;
 	public static Point firstPoint;
 	public static JButton currentButton;
 	public static Object currentStatus = "e";
@@ -140,21 +140,31 @@ public class Game {
 			// System.out.println(buttonCol);
 			// System.out.println(statusMap[buttonRow][buttonCol]);
 			
-			if(ifFirstClick) {
-				setMine();
-			}
-			
-			statusMap[buttonRow][buttonCol] = 0;
+//			statusMap[buttonRow][buttonCol] = 0;
 			System.out.println(statusMap[buttonRow][buttonCol]);
 			buttonSet[buttonRow][buttonCol].setEnabled(false);
+			
+			if(clickCount == 0) {
+				firstPoint = new Point(buttonCol, buttonRow);
+				setMine(firstPoint);
+			}
+			clickCount++;
+			
+			if(statusMap[buttonRow][buttonCol].equals("m")) {
+				System.out.println("YOU LOSE SUCKER!");
+			}
 		}
 
-		private void setMine() {
+		private void setMine(Point firstpoint) {
 			List<Point> mineLocationSet = new ArrayList<>();
 			while (true) {
 				mineLocationSet = new ArrayList<>();
 				for (int i = 0; i < mineQTY; i++) {
 					Point mineLocation = new Point((int) (Math.random() * ttlRow), (int) (Math.random() * ttlCol));
+					
+					if(mineLocation.equals(firstpoint))
+						break;
+					
 					mineLocationSet.add(mineLocation);
 					statusMap[(int) mineLocation.y][(int) mineLocation.x] = "m";
 				}
@@ -162,6 +172,7 @@ public class Game {
 				if (mineLocationSet.size() == mineQTY)
 					break;
 			}
+			System.out.println(mineLocationSet);
 		}
 	}
 }
