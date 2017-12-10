@@ -39,6 +39,11 @@ final class LeftClick implements ActionListener {
 		}
 		GameUI.clickCount++;
 
+		// 对点击点以及其周围点判断
+		judgeOneBlock(buttonCol, buttonRow);
+	}
+
+	private void judgeOneBlock(int buttonCol, int buttonRow) {
 		if (GameUI.statusMap[buttonRow][buttonCol].equals("m")) {
 			// 标出你踩的雷，boom
 			ImageIcon ico = new ImageIcon(System.getProperty("user.dir") + "\\res\\boom_laji.jpg");
@@ -46,16 +51,16 @@ final class LeftClick implements ActionListener {
 			GameUI.buttonSet[buttonRow][buttonCol].setIcon(ico);
 			for (int r = 0; r < GameUI.ttlRow; r++) {
 				for (int c = 0; c < GameUI.ttlCol; c++) {
-					// 锁死所有按钮，游戏结束
-					GameUI.buttonSet[r][c].setEnabled(false);
-
 					// 把其余所有没有点击的地雷灰度图显示出来，以示公平
-					if (GameUI.statusMap[r][c] == "m" && r != buttonRow && c != buttonCol) {
+					if (GameUI.statusMap[r][c] == "m" && (r != buttonRow && c != buttonCol)) {
 						ImageIcon ico2 = new ImageIcon(
 								System.getProperty("user.dir") + "\\res\\unrevealed_boom_laji.jpg");
 						ico2.setImage(ico2.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
 						GameUI.buttonSet[r][c].setIcon(ico2);
 					}
+					// 锁死所有按钮，游戏结束
+					if(!GameUI.debug)
+						GameUI.buttonSet[r][c].setEnabled(false);
 				}
 			}
 			System.out.println("YOU LOSE SUCKER!");
@@ -70,48 +75,49 @@ final class LeftClick implements ActionListener {
 			GameUI.statusMap[buttonRow][buttonCol] = 0;
 
 			// 判断九宫格内是否有炸
-			int surroundingMines = judgeSurrounding(buttonCol, buttonRow);
+			int surroundingMines = judgeSurroundingIs(buttonCol, buttonRow, "m");
 
 			System.out.println(surroundingMines);
-			// GameUI.buttonSet[buttonRow][buttonCol].setHorizontalTextPosition(SwingConstants.CENTER);
-			// GameUI.buttonSet[buttonRow][buttonCol].setFont(new Font("Calibri", Font.BOLD,
-			// 10));
-			// GameUI.buttonSet[buttonRow][buttonCol].setText(Integer.toString(surroundingMines));
 
 			ImageIcon num = new ImageIcon(
 					System.getProperty("user.dir") + "\\res\\number\\" + surroundingMines + ".jpg");
 			num.setImage(num.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
 			GameUI.buttonSet[buttonRow][buttonCol].setIcon(num);
+			
+			// 自动展开到最近有数字的区域
+//			if(GameUI.statusMap[buttonRow - 1][buttonCol - 1].equals("e")) {
+//				
+//			}
 		}
 	}
 
-	private int judgeSurrounding(int buttonCol, int buttonRow) {
+	private int judgeSurroundingIs(int buttonCol, int buttonRow, String target) {
 		int surroundingMines = 0;
 
 		// 判断九宫格内是否有炸（雷）(中心)
 		if (buttonRow != 0 && buttonRow != GameUI.ttlRow - 1 && buttonCol != 0 && buttonCol != GameUI.ttlCol - 1) {
-			if (GameUI.statusMap[buttonRow - 1][buttonCol - 1].equals("m")) {
+			if (GameUI.statusMap[buttonRow - 1][buttonCol - 1].equals(target)) {
 				surroundingMines++;
 			}
-			if (GameUI.statusMap[buttonRow - 1][buttonCol].equals("m")) {
+			if (GameUI.statusMap[buttonRow - 1][buttonCol].equals(target)) {
 				surroundingMines++;
 			}
-			if (GameUI.statusMap[buttonRow - 1][buttonCol + 1].equals("m")) {
+			if (GameUI.statusMap[buttonRow - 1][buttonCol + 1].equals(target)) {
 				surroundingMines++;
 			}
-			if (GameUI.statusMap[buttonRow][buttonCol - 1].equals("m")) {
+			if (GameUI.statusMap[buttonRow][buttonCol - 1].equals(target)) {
 				surroundingMines++;
 			}
-			if (GameUI.statusMap[buttonRow][buttonCol + 1].equals("m")) {
+			if (GameUI.statusMap[buttonRow][buttonCol + 1].equals(target)) {
 				surroundingMines++;
 			}
-			if (GameUI.statusMap[buttonRow + 1][buttonCol - 1].equals("m")) {
+			if (GameUI.statusMap[buttonRow + 1][buttonCol - 1].equals(target)) {
 				surroundingMines++;
 			}
-			if (GameUI.statusMap[buttonRow + 1][buttonCol].equals("m")) {
+			if (GameUI.statusMap[buttonRow + 1][buttonCol].equals(target)) {
 				surroundingMines++;
 			}
-			if (GameUI.statusMap[buttonRow + 1][buttonCol + 1].equals("m")) {
+			if (GameUI.statusMap[buttonRow + 1][buttonCol + 1].equals(target)) {
 				surroundingMines++;
 			}
 		}
@@ -119,49 +125,49 @@ final class LeftClick implements ActionListener {
 		// 判断九宫格内是否有炸（雷）(四角)
 		// 左上角
 		if (buttonRow == 0 && buttonCol == 0) {
-			if (GameUI.statusMap[buttonRow][buttonCol + 1].equals("m")) {
+			if (GameUI.statusMap[buttonRow][buttonCol + 1].equals(target)) {
 				surroundingMines++;
 			}
-			if (GameUI.statusMap[buttonRow + 1][buttonCol].equals("m")) {
+			if (GameUI.statusMap[buttonRow + 1][buttonCol].equals(target)) {
 				surroundingMines++;
 			}
-			if (GameUI.statusMap[buttonRow + 1][buttonCol + 1].equals("m")) {
+			if (GameUI.statusMap[buttonRow + 1][buttonCol + 1].equals(target)) {
 				surroundingMines++;
 			}
 		}
 		// 右上角
 		if (buttonRow == 0 && buttonCol == GameUI.ttlCol - 1) {
-			if (GameUI.statusMap[buttonRow][buttonCol - 1].equals("m")) {
+			if (GameUI.statusMap[buttonRow][buttonCol - 1].equals(target)) {
 				surroundingMines++;
 			}
-			if (GameUI.statusMap[buttonRow + 1][buttonCol].equals("m")) {
+			if (GameUI.statusMap[buttonRow + 1][buttonCol].equals(target)) {
 				surroundingMines++;
 			}
-			if (GameUI.statusMap[buttonRow + 1][buttonCol - 1].equals("m")) {
+			if (GameUI.statusMap[buttonRow + 1][buttonCol - 1].equals(target)) {
 				surroundingMines++;
 			}
 		}
 		// 左下角
 		if (buttonRow == GameUI.ttlRow - 1 && buttonCol == 0) {
-			if (GameUI.statusMap[buttonRow][buttonCol + 1].equals("m")) {
+			if (GameUI.statusMap[buttonRow][buttonCol + 1].equals(target)) {
 				surroundingMines++;
 			}
-			if (GameUI.statusMap[buttonRow - 1][buttonCol].equals("m")) {
+			if (GameUI.statusMap[buttonRow - 1][buttonCol].equals(target)) {
 				surroundingMines++;
 			}
-			if (GameUI.statusMap[buttonRow - 1][buttonCol + 1].equals("m")) {
+			if (GameUI.statusMap[buttonRow - 1][buttonCol + 1].equals(target)) {
 				surroundingMines++;
 			}
 		}
 		// 右下角
 		if (buttonRow == GameUI.ttlRow - 1 && buttonCol == GameUI.ttlCol - 1) {
-			if (GameUI.statusMap[buttonRow][buttonCol - 1].equals("m")) {
+			if (GameUI.statusMap[buttonRow][buttonCol - 1].equals(target)) {
 				surroundingMines++;
 			}
-			if (GameUI.statusMap[buttonRow - 1][buttonCol].equals("m")) {
+			if (GameUI.statusMap[buttonRow - 1][buttonCol].equals(target)) {
 				surroundingMines++;
 			}
-			if (GameUI.statusMap[buttonRow - 1][buttonCol - 1].equals("m")) {
+			if (GameUI.statusMap[buttonRow - 1][buttonCol - 1].equals(target)) {
 				surroundingMines++;
 			}
 		}
@@ -169,73 +175,73 @@ final class LeftClick implements ActionListener {
 		// 判断九宫格内是否有炸（雷）(边缘)
 		// 上边
 		if (buttonRow == 0 && buttonCol != 0 && buttonCol != GameUI.ttlCol - 1) {
-			if (GameUI.statusMap[buttonRow][buttonCol - 1].equals("m")) {
+			if (GameUI.statusMap[buttonRow][buttonCol - 1].equals(target)) {
 				surroundingMines++;
 			}
-			if (GameUI.statusMap[buttonRow][buttonCol + 1].equals("m")) {
+			if (GameUI.statusMap[buttonRow][buttonCol + 1].equals(target)) {
 				surroundingMines++;
 			}
-			if (GameUI.statusMap[buttonRow + 1][buttonCol - 1].equals("m")) {
+			if (GameUI.statusMap[buttonRow + 1][buttonCol - 1].equals(target)) {
 				surroundingMines++;
 			}
-			if (GameUI.statusMap[buttonRow + 1][buttonCol].equals("m")) {
+			if (GameUI.statusMap[buttonRow + 1][buttonCol].equals(target)) {
 				surroundingMines++;
 			}
-			if (GameUI.statusMap[buttonRow + 1][buttonCol + 1].equals("m")) {
+			if (GameUI.statusMap[buttonRow + 1][buttonCol + 1].equals(target)) {
 				surroundingMines++;
 			}
 		}
 		// 下边
 		if (buttonRow == GameUI.ttlRow - 1 && buttonCol != 0 && buttonCol != GameUI.ttlCol - 1) {
-			if (GameUI.statusMap[buttonRow][buttonCol - 1].equals("m")) {
+			if (GameUI.statusMap[buttonRow][buttonCol - 1].equals(target)) {
 				surroundingMines++;
 			}
-			if (GameUI.statusMap[buttonRow][buttonCol + 1].equals("m")) {
+			if (GameUI.statusMap[buttonRow][buttonCol + 1].equals(target)) {
 				surroundingMines++;
 			}
-			if (GameUI.statusMap[buttonRow - 1][buttonCol - 1].equals("m")) {
+			if (GameUI.statusMap[buttonRow - 1][buttonCol - 1].equals(target)) {
 				surroundingMines++;
 			}
-			if (GameUI.statusMap[buttonRow - 1][buttonCol].equals("m")) {
+			if (GameUI.statusMap[buttonRow - 1][buttonCol].equals(target)) {
 				surroundingMines++;
 			}
-			if (GameUI.statusMap[buttonRow - 1][buttonCol + 1].equals("m")) {
+			if (GameUI.statusMap[buttonRow - 1][buttonCol + 1].equals(target)) {
 				surroundingMines++;
 			}
 		}
 		// 左边
 		if (buttonCol == 0 && buttonRow != 0 && buttonRow != GameUI.ttlRow - 1) {
-			if (GameUI.statusMap[buttonRow - 1][buttonCol].equals("m")) {
+			if (GameUI.statusMap[buttonRow - 1][buttonCol].equals(target)) {
 				surroundingMines++;
 			}
-			if (GameUI.statusMap[buttonRow + 1][buttonCol].equals("m")) {
+			if (GameUI.statusMap[buttonRow + 1][buttonCol].equals(target)) {
 				surroundingMines++;
 			}
-			if (GameUI.statusMap[buttonRow - 1][buttonCol + 1].equals("m")) {
+			if (GameUI.statusMap[buttonRow - 1][buttonCol + 1].equals(target)) {
 				surroundingMines++;
 			}
-			if (GameUI.statusMap[buttonRow][buttonCol + 1].equals("m")) {
+			if (GameUI.statusMap[buttonRow][buttonCol + 1].equals(target)) {
 				surroundingMines++;
 			}
-			if (GameUI.statusMap[buttonRow + 1][buttonCol + 1].equals("m")) {
+			if (GameUI.statusMap[buttonRow + 1][buttonCol + 1].equals(target)) {
 				surroundingMines++;
 			}
 		}
 		// 右边
 		if (buttonCol == GameUI.ttlCol - 1 && buttonRow != 0 && buttonRow != GameUI.ttlRow - 1) {
-			if (GameUI.statusMap[buttonRow - 1][buttonCol].equals("m")) {
+			if (GameUI.statusMap[buttonRow - 1][buttonCol].equals(target)) {
 				surroundingMines++;
 			}
-			if (GameUI.statusMap[buttonRow + 1][buttonCol].equals("m")) {
+			if (GameUI.statusMap[buttonRow + 1][buttonCol].equals(target)) {
 				surroundingMines++;
 			}
-			if (GameUI.statusMap[buttonRow - 1][buttonCol - 1].equals("m")) {
+			if (GameUI.statusMap[buttonRow - 1][buttonCol - 1].equals(target)) {
 				surroundingMines++;
 			}
-			if (GameUI.statusMap[buttonRow][buttonCol - 1].equals("m")) {
+			if (GameUI.statusMap[buttonRow][buttonCol - 1].equals(target)) {
 				surroundingMines++;
 			}
-			if (GameUI.statusMap[buttonRow + 1][buttonCol - 1].equals("m")) {
+			if (GameUI.statusMap[buttonRow + 1][buttonCol - 1].equals(target)) {
 				surroundingMines++;
 			}
 		}
