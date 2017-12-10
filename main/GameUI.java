@@ -8,8 +8,6 @@ import java.awt.Graphics;
 import javax.swing.JFrame;
 import javax.swing.SwingConstants;
 
-import javafx.beans.property.StringProperty;
-
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;

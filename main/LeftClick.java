@@ -45,14 +45,11 @@ final class LeftClick implements ActionListener {
 
 	private void judgeOneBlock(int buttonCol, int buttonRow) {
 		if (GameUI.statusMap[buttonRow][buttonCol].equals("m")) {
-			// 标出你踩的雷，boom
-			ImageIcon ico = new ImageIcon(System.getProperty("user.dir") + "\\res\\boom_laji.jpg");
-			ico.setImage(ico.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
-			GameUI.buttonSet[buttonRow][buttonCol].setIcon(ico);
+
 			for (int r = 0; r < GameUI.ttlRow; r++) {
 				for (int c = 0; c < GameUI.ttlCol; c++) {
 					// 把其余所有没有点击的地雷灰度图显示出来，以示公平
-					if (GameUI.statusMap[r][c] == "m" && (r != buttonRow && c != buttonCol)) {
+					if (GameUI.statusMap[r][c] == "m") {
 						ImageIcon ico2 = new ImageIcon(
 								System.getProperty("user.dir") + "\\res\\unrevealed_boom_laji.jpg");
 						ico2.setImage(ico2.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
@@ -63,6 +60,10 @@ final class LeftClick implements ActionListener {
 						GameUI.buttonSet[r][c].setEnabled(false);
 				}
 			}
+			// 标出你踩的雷，boom
+			ImageIcon ico = new ImageIcon(System.getProperty("user.dir") + "\\res\\boom_laji.jpg");
+			ico.setImage(ico.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
+			GameUI.buttonSet[buttonRow][buttonCol].setIcon(ico);
 			System.out.println("YOU LOSE SUCKER!");
 		}
 
