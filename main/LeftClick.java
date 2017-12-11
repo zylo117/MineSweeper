@@ -42,8 +42,8 @@ final class LeftClick implements ActionListener {
 		} else {
 			// 如果已被右键标记
 			GameUI.markMap[buttonRow][buttonCol] = 0;
-			final ImageIcon ico = new ImageIcon(GameUI.class.getResource("..\\res\\dirt_huaji.jpg"));
-			ico.setImage(ico.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
+			final ImageIcon ico = new ImageIcon(GameUI.class.getResource("/res/dirt_huaji.jpg"));
+			ico.setImage(ico.getImage().getScaledInstance(GameUI.blockSize,GameUI. blockSize, Image.SCALE_SMOOTH));
 			GameUI.buttonSet[buttonRow][buttonCol].setIcon(ico);
 			GameUI.markChance++;
 		}
@@ -57,9 +57,8 @@ final class LeftClick implements ActionListener {
 				for (int c = 0; c < GameUI.ttlCol; c++) {
 					// 把其余所有没有点击的地雷灰度图显示出来，以示公平
 					if (GameUI.statusMap[r][c] == 9) {
-						final ImageIcon ico2 = new ImageIcon(
-								GameUI.class.getResource("..\\res\\unrevealed_boom_laji.jpg"));
-						ico2.setImage(ico2.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
+						final ImageIcon ico2 = new ImageIcon(GameUI.class.getResource("/res/unrevealed_boom_laji.jpg"));
+						ico2.setImage(ico2.getImage().getScaledInstance(GameUI.blockSize,GameUI. blockSize, Image.SCALE_SMOOTH));
 						GameUI.buttonSet[r][c].setIcon(ico2);
 					}
 					// 锁死所有按钮，游戏结束
@@ -69,17 +68,17 @@ final class LeftClick implements ActionListener {
 				}
 			}
 			// 标出你踩的雷，boom
-			final ImageIcon ico = new ImageIcon(GameUI.class.getResource("..\\res\\boom_laji.jpg"));
-			ico.setImage(ico.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
+			final ImageIcon ico = new ImageIcon(GameUI.class.getResource("/res/boom_laji.jpg"));
+			ico.setImage(ico.getImage().getScaledInstance(GameUI.blockSize,GameUI. blockSize, Image.SCALE_SMOOTH));
 			GameUI.buttonSet[buttonRow][buttonCol].setIcon(ico);
-//			System.out.println("YOU LOSE SUCKER!");
+			// System.out.println("YOU LOSE SUCKER!");
 			System.out.println("你输给了辣稽!");
 		}
 
 		// 如果没有炸
 		if (GameUI.statusMap[buttonRow][buttonCol] == -1) {
-			final ImageIcon ico = new ImageIcon(GameUI.class.getResource("..\\res\\empty.jpg"));
-			ico.setImage(ico.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
+			final ImageIcon ico = new ImageIcon(GameUI.class.getResource("/res/empty.jpg"));
+			ico.setImage(ico.getImage().getScaledInstance(GameUI.blockSize,GameUI. blockSize, Image.SCALE_SMOOTH));
 			GameUI.buttonSet[buttonRow][buttonCol].setIcon(ico);
 			GameUI.buttonSet[buttonRow][buttonCol].setEnabled(false);
 			GameUI.statusMap[buttonRow][buttonCol] = 0;
@@ -92,8 +91,8 @@ final class LeftClick implements ActionListener {
 
 			if (surroundingMines > 0) {
 				final ImageIcon num = new ImageIcon(
-						GameUI.class.getResource("..\\res\\number\\" + surroundingMines + ".jpg"));
-				num.setImage(num.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
+						GameUI.class.getResource("/res/number/" + surroundingMines + ".jpg"));
+				num.setImage(num.getImage().getScaledInstance(GameUI.blockSize,GameUI. blockSize, Image.SCALE_SMOOTH));
 				GameUI.buttonSet[buttonRow][buttonCol].setIcon(num);
 				GameUI.buttonSet[buttonRow][buttonCol].setEnabled(false);
 			}
@@ -101,7 +100,7 @@ final class LeftClick implements ActionListener {
 			// 自动展开到最近有数字的区域
 			autoRevealEmptyBlock(buttonCol, buttonRow);
 		}
-		
+
 		judgeWin();
 	}
 
@@ -114,7 +113,7 @@ final class LeftClick implements ActionListener {
 				if (GameUI.statusMap[r][c] == 9 && GameUI.markMap[r][c] == 1) {
 					safeMine++;
 				}
-				if(GameUI.statusMap[r][c] == -1) {
+				if (GameUI.statusMap[r][c] == -1) {
 					remainingBlank++;
 				}
 			}
@@ -122,7 +121,7 @@ final class LeftClick implements ActionListener {
 		System.out.println("safeMine" + safeMine);
 		System.out.println("remainingBlank" + remainingBlank);
 
-		if(safeMine == GameUI.mineQTY) {
+		if (safeMine == GameUI.mineQTY) {
 			System.out.println("你给我搞的这个比赛，一颗赛艇！");
 		}
 	}

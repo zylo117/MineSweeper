@@ -13,9 +13,9 @@ import tool.Point;
 
 public class GameUI {
 
-	public static int ttlRow = 5;
-	public static int ttlCol = 5;
-	public static int mineQTY = 2; // 建议不超过总数的10分之1
+	public static int ttlRow = 10;
+	public static int ttlCol = 10;
+	public static int mineQTY = 5; // 建议不超过总数的10分之1
 	public static boolean debug = false;
 	public static JButton[][] buttonSet = new JButton[ttlRow][ttlCol];
 	public static int clickCount = 0;
@@ -23,6 +23,7 @@ public class GameUI {
 	public static JButton currentButton;
 	public static boolean initFinished = false;
 	public static boolean ifDeployed = false;
+	public static int blockSize = 30;
 
 	public static int[][] statusMap = new int[999][999];
 	/**
@@ -71,7 +72,7 @@ public class GameUI {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setResizable(false);
-		frame.setBounds(100, 100, 30 * ttlCol, 30 * ttlRow);
+		frame.setBounds(100, 100, blockSize * ttlCol, blockSize * ttlRow);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// 设置行列数
@@ -85,8 +86,8 @@ public class GameUI {
 
 				frame.getContentPane().add(buttonSet[r][c]);
 				buttonSet[r][c].setUI(new MyButtonUI());
-				final ImageIcon ico = new ImageIcon(GameUI.class.getResource("..\\res\\dirt_huaji.jpg"));
-				ico.setImage(ico.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
+				final ImageIcon ico = new ImageIcon(GameUI.class.getResource("/res/dirt_huaji.jpg"));
+				ico.setImage(ico.getImage().getScaledInstance(blockSize, blockSize, Image.SCALE_SMOOTH));
 				buttonSet[r][c].setIcon(ico);
 
 				// 对左键响应
