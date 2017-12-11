@@ -85,14 +85,12 @@ final class LeftClick implements ActionListener {
 			GameUI.buttonSet[buttonRow][buttonCol].setEnabled(false);
 
 			// 自动展开到最近有数字的区域
-			if (GameUI.initFinished && !GameUI.ifDeployed)
+			if (GameUI.initFinished)
 				autoRevealEmptyBlock(buttonCol, buttonRow);
-			GameUI.ifDeployed = true;
 		}
 	}
 
 	private void autoRevealEmptyBlock(int buttonCol, int buttonRow) {
-		// 判断中心
 		if (GameUI.statusMap[buttonRow][buttonCol] == 0) {
 			reveal3x3Block(buttonCol, buttonRow);
 		}
@@ -102,14 +100,40 @@ final class LeftClick implements ActionListener {
 		int c = buttonCol;
 		int r = buttonRow;
 		// 判断中心
-		if (r != 0 && r != GameUI.ttlRow - 1 && c != 0 && c != GameUI.ttlCol - 1) {
-			GameUI.buttonSet[r - 1][c - 1].doClick(0);
-			GameUI.buttonSet[r - 1][c + 1].doClick(0);
-			GameUI.buttonSet[r][c - 1].doClick(0);
-			GameUI.buttonSet[r][c + 1].doClick(0);
-			GameUI.buttonSet[r + 1][c - 1].doClick(0);
-			GameUI.buttonSet[r + 1][c].doClick(0);
-			GameUI.buttonSet[r + 1][c + 1].doClick(0);
+		if (buttonRow != 0 && buttonRow != GameUI.ttlRow - 1 && buttonCol != 0 && buttonCol != GameUI.ttlCol - 1) {
+			GameUI.buttonSet[buttonRow - 1][buttonCol - 1].doClick(0);
+			GameUI.buttonSet[buttonRow - 1][buttonCol].doClick(0);
+			GameUI.buttonSet[buttonRow - 1][buttonCol + 1].doClick(0);
+			GameUI.buttonSet[buttonRow][buttonCol - 1].doClick(0);
+			GameUI.buttonSet[buttonRow][buttonCol + 1].doClick(0);
+			GameUI.buttonSet[buttonRow + 1][buttonCol - 1].doClick(0);
+			GameUI.buttonSet[buttonRow + 1][buttonCol].doClick(0);
+			GameUI.buttonSet[buttonRow + 1][buttonCol + 1].doClick(0);
+		}
+		// 判断四角
+		// 左上角
+		if (buttonRow == 0 && buttonCol == 0) {
+			GameUI.buttonSet[buttonRow][buttonCol + 1].doClick(0);
+			GameUI.buttonSet[buttonRow + 1][buttonCol].doClick(0);
+			GameUI.buttonSet[buttonRow + 1][buttonCol + 1].doClick(0);
+		}
+		// 右上角
+		if (buttonRow == 0 && buttonCol == GameUI.ttlCol - 1) {
+			GameUI.buttonSet[buttonRow][buttonCol - 1].doClick(0);
+			GameUI.buttonSet[buttonRow + 1][buttonCol - 1].doClick(0);
+			GameUI.buttonSet[buttonRow + 1][buttonCol].doClick(0);
+		}
+		// 左下角
+		if (buttonRow == GameUI.ttlRow - 1 && buttonCol == 0) {
+			GameUI.buttonSet[buttonRow - 1][buttonCol + 1].doClick(0);
+			GameUI.buttonSet[buttonRow - 1][buttonCol].doClick(0);
+			GameUI.buttonSet[buttonRow][buttonCol + 1].doClick(0);
+		}
+		// 右下角
+		if (buttonRow == GameUI.ttlRow - 1 && buttonCol == GameUI.ttlCol - 1) {
+			GameUI.buttonSet[buttonRow - 1][buttonCol - 1].doClick(0);
+			GameUI.buttonSet[buttonRow - 1][buttonCol].doClick(0);
+			GameUI.buttonSet[buttonRow][buttonCol - 1].doClick(0);
 		}
 	}
 
