@@ -8,6 +8,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
+import tool.MyButtonUI;
 import tool.Point;
 
 public class GameUI {
@@ -22,13 +23,15 @@ public class GameUI {
 	public static JButton currentButton;
 	public static boolean initFinished = false;
 	public static boolean ifDeployed = false;
-	
+
 	public static int[][] statusMap = new int[999][999];
 	/**
 	 * 状态图示意 
+	 * -1，未点击，空，安全 
 	 * 0，已点击/未点击，空，安全 
 	 * 1~8，已点击，附近有1~8个雷 
 	 * 9，点击，雷。炸了
+	 * 10,右键点击标记雷
 	 */
 
 	private JFrame frame;
@@ -68,7 +71,7 @@ public class GameUI {
 
 		for (int r = 0; r < ttlRow; r++) {
 			for (int c = 0; c < ttlCol; c++) {
-				// currentButton = buttonSet[r][c];
+				statusMap[r][c] = -1;
 
 				buttonSet[r][c] = new JButton();
 
@@ -79,7 +82,11 @@ public class GameUI {
 				ico.setImage(ico.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
 				buttonSet[r][c].setIcon(ico);
 
+				// 对左键响应
 				buttonSet[r][c].addActionListener(new LeftClick());
+
+				// 对右键响应
+				buttonSet[r][c].addMouseListener(new RightClick());
 			}
 		}
 		initFinished = true;

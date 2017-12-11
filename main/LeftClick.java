@@ -66,11 +66,12 @@ final class LeftClick implements ActionListener {
 		}
 
 		// 如果没有炸
-		if (GameUI.statusMap[buttonRow][buttonCol] == 0) {
+		if (GameUI.statusMap[buttonRow][buttonCol] == -1) {
 			final ImageIcon ico = new ImageIcon(System.getProperty("user.dir") + "\\res\\empty.jpg");
 			ico.setImage(ico.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
 			GameUI.buttonSet[buttonRow][buttonCol].setIcon(ico);
 			GameUI.buttonSet[buttonRow][buttonCol].setEnabled(false);
+			GameUI.statusMap[buttonRow][buttonCol] = 0;
 
 			// 判断九宫格内是否有炸
 			final int surroundingMines = judgeSurroundingIs(buttonCol, buttonRow, 9);
@@ -85,13 +86,12 @@ final class LeftClick implements ActionListener {
 			GameUI.buttonSet[buttonRow][buttonCol].setEnabled(false);
 
 			// 自动展开到最近有数字的区域
-			if (GameUI.initFinished)
-				autoRevealEmptyBlock(buttonCol, buttonRow);
+			autoRevealEmptyBlock(buttonCol, buttonRow);
 		}
 	}
 
 	private void autoRevealEmptyBlock(int buttonCol, int buttonRow) {
-		if (GameUI.statusMap[buttonRow][buttonCol] == 0) {
+		if (GameUI.statusMap[buttonRow][buttonCol] == -1 || GameUI.statusMap[buttonRow][buttonCol] == 0) {
 			reveal3x3Block(buttonCol, buttonRow);
 		}
 	}
