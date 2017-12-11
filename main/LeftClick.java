@@ -20,7 +20,6 @@ final class LeftClick implements ActionListener {
 		int buttonRow = Integer.parseInt(buttonData[2]);
 		buttonCol = buttonCol / Integer.parseInt(buttonSize[0]);
 		buttonRow = buttonRow / Integer.parseInt(buttonSize[1]);
-
 		// System.out.println(e.getSource().toString());
 		// System.out.println(buttonRow);
 		// System.out.println(buttonCol);
@@ -77,6 +76,7 @@ final class LeftClick implements ActionListener {
 			final int surroundingMines = judgeSurroundingIs(buttonCol, buttonRow, 9);
 
 			System.out.println(surroundingMines);
+			GameUI.statusMap[buttonRow][buttonCol] = surroundingMines;
 
 			final ImageIcon num = new ImageIcon(
 					System.getProperty("user.dir") + "\\res\\number\\" + surroundingMines + ".jpg");
@@ -85,7 +85,9 @@ final class LeftClick implements ActionListener {
 			GameUI.buttonSet[buttonRow][buttonCol].setEnabled(false);
 
 			// 自动展开到最近有数字的区域
-			autoRevealEmptyBlock(buttonCol, buttonRow);
+			if (GameUI.initFinished && !GameUI.ifDeployed)
+				autoRevealEmptyBlock(buttonCol, buttonRow);
+			GameUI.ifDeployed = true;
 		}
 	}
 
@@ -97,16 +99,17 @@ final class LeftClick implements ActionListener {
 	}
 
 	private void reveal3x3Block(int buttonCol, int buttonRow) {
+		int c = buttonCol;
+		int r = buttonRow;
 		// 判断中心
-		if (buttonRow != 0 && buttonRow != GameUI.ttlRow - 1 && buttonCol != 0 && buttonCol != GameUI.ttlCol - 1) {
-			GameUI.buttonSet[buttonRow - 1][buttonCol - 1].doClick();
-			GameUI.buttonSet[buttonRow - 1][buttonCol].doClick();
-			GameUI.buttonSet[buttonRow - 1][buttonCol + 1].doClick();
-			GameUI.buttonSet[buttonRow][buttonCol - 1].doClick();
-			GameUI.buttonSet[buttonRow][buttonCol + 1].doClick();
-			GameUI.buttonSet[buttonRow + 1][buttonCol - 1].doClick();
-			GameUI.buttonSet[buttonRow + 1][buttonCol].doClick();
-			GameUI.buttonSet[buttonRow + 1][buttonCol + 1].doClick();
+		if (r != 0 && r != GameUI.ttlRow - 1 && c != 0 && c != GameUI.ttlCol - 1) {
+			GameUI.buttonSet[r - 1][c - 1].doClick(0);
+			GameUI.buttonSet[r - 1][c + 1].doClick(0);
+			GameUI.buttonSet[r][c - 1].doClick(0);
+			GameUI.buttonSet[r][c + 1].doClick(0);
+			GameUI.buttonSet[r + 1][c - 1].doClick(0);
+			GameUI.buttonSet[r + 1][c].doClick(0);
+			GameUI.buttonSet[r + 1][c + 1].doClick(0);
 		}
 	}
 

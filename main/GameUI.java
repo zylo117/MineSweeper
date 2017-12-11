@@ -20,6 +20,8 @@ public class GameUI {
 	public static int clickCount = 0;
 	public static Point firstPoint;
 	public static JButton currentButton;
+	public static boolean initFinished = false;
+	public static boolean ifDeployed = false;
 	
 	public static int[][] statusMap = new int[999][999];
 	/**
@@ -78,9 +80,9 @@ public class GameUI {
 				buttonSet[r][c].setIcon(ico);
 
 				buttonSet[r][c].addActionListener(new LeftClick());
-
 			}
 		}
+		initFinished = true;
 
 	}
 }
