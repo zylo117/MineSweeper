@@ -54,10 +54,11 @@ final class RightClick extends MouseAdapter {
 				}
 			}
 		}
+		System.out.println("safeMine" + safeMine);
+		System.out.println("remainingBlank" + remainingBlank);
+
 		if(safeMine == GameUI.mineQTY) {
 			System.out.println("你给我搞的这个比赛，一颗赛艇！");
 		}
-		System.out.println("safeMine" + safeMine);
-		System.out.println("remainingBlank" + remainingBlank);
 	}
 }
