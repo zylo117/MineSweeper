@@ -80,11 +80,11 @@ final class LeftClick implements ActionListener {
 			// System.out.println("YOU LOSE SUCKER!");
 			System.out.println("很惭愧，只踩了一个微小的地雷");
 			
-			popUpResult.result.setText("很惭愧，只踩了一个微小的地雷");
+			PopUpResult.result.setText("很惭愧，只踩了一个微小的地雷");
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {
-						popUpResult window = new popUpResult();
+						PopUpResult window = new PopUpResult();
 						window.frame.setVisible(true);
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -150,11 +150,11 @@ final class LeftClick implements ActionListener {
 			}
 			System.out.println("你给我搞的这个游戏啊，一颗赛艇！");
 			
-			popUpResult.result.setText("你给我搞的这个游戏啊，一颗赛艇！");
+			PopUpResult.result.setText("你给我搞的这个游戏啊，一颗赛艇！");
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {
-						popUpResult window = new popUpResult();
+						PopUpResult window = new PopUpResult();
 						window.frame.setVisible(true);
 					} catch (Exception e) {
 						e.printStackTrace();

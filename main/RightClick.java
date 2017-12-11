@@ -69,11 +69,11 @@ final class RightClick extends MouseAdapter {
 					}
 				}
 			}
-			popUpResult.result.setText("你给我搞的这个游戏啊，一颗赛艇！");
+			PopUpResult.result.setText("你给我搞的这个游戏啊，一颗赛艇！");
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {
-						popUpResult window = new popUpResult();
+						PopUpResult window = new PopUpResult();
 						window.frame.setVisible(true);
 					} catch (Exception e) {
 						e.printStackTrace();
