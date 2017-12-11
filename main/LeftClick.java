@@ -32,6 +32,11 @@ final class LeftClick implements ActionListener {
 		if (GameUI.clickCount == 0 && GameUI.markMap[buttonRow][buttonCol] != 1) {
 			GameUI.firstPoint = new Point(buttonCol, buttonRow);
 			setMine(GameUI.firstPoint);
+			
+			// 如果一开始就按到空格，自动展开
+			if(judgeSurroundingIs(buttonCol, buttonRow, 9) == 0) {
+				reveal3x3Block(buttonCol, buttonRow);
+			}
 		}
 		if (GameUI.markMap[buttonRow][buttonCol] != 1) {
 			GameUI.clickCount++;
@@ -341,8 +346,8 @@ final class LeftClick implements ActionListener {
 	private void setMine(Point firstpoint) {
 		final HashSet<Point> mineLocationSet = new HashSet<>();
 		while (true) {
-			final Point mineLocation = new Point((int) (Math.random() * GameUI.ttlRow),
-					(int) (Math.random() * GameUI.ttlCol));
+			final Point mineLocation = new Point((int) (Math.random() * GameUI.ttlCol),
+					(int) (Math.random() * GameUI.ttlRow));
 
 			if (mineLocation.equals(firstpoint)) {
 				continue;

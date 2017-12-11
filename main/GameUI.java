@@ -14,53 +14,16 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JMenuBar;
 import javax.swing.JTextField;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+
 import java.sql.Time;
 import java.util.Timer;
-import java.awt.event.ActionEvent;
+
 import javax.swing.JRadioButton;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
 public class GameUI {
-
-	private final class ResetGame implements ActionListener {
-		private final JPanel panel_1;
-		private final JPanel panel;
-
-		private ResetGame(JPanel panel_1, JPanel panel) {
-			this.panel_1 = panel_1;
-			this.panel = panel;
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO 自动生成的方法存根
-			new Thread(new Runnable() {
-
-				@Override
-				public void run() {
-					// TODO 自动生成的方法存根
-					panel_1.removeAll();
-					statusMap = new int[999][999];
-					markMap = new int[999][999];
-					clickCount = 0;
-					firstPoint = new Point();
-					mineQTY = markChance = Integer.parseInt(mineBox.getText());
-					ttlCol = Integer.parseInt(colBox.getText());
-					ttlRow = Integer.parseInt(rowBox.getText());
-					buttonSet = new JButton[ttlRow][ttlCol];
-					frame.setBounds(100, 100, blockSize * ttlCol + 10, blockSize * ttlRow + 130);
-					panel.setBounds(0, 0, blockSize * ttlCol + 10, blockSize * ttlRow + 130);
-					init(panel_1);
-				}
-			}).start();
-
-		}
-	}
 
 	public static JButton reset = new JButton("Reset");
 	public static int ttlRow = 10;
@@ -94,10 +57,10 @@ public class GameUI {
 	 * 1，已标记
 	 */
 
-	private JFrame frame;
-	private JTextField rowBox;
-	private JTextField colBox;
-	private JTextField mineBox;
+	JFrame frame;
+	JTextField rowBox;
+	JTextField colBox;
+	JTextField mineBox;
 
 	/**
 	 * Launch the application.
@@ -190,72 +153,17 @@ public class GameUI {
 		JComboBox comboBox = new JComboBox();
 		panel_2.add(comboBox);
 		comboBox.setModel(new DefaultComboBoxModel(new String[] { "Easy", "Medium", "Hard", "Custom" }));
-		comboBox.addItemListener(new ItemListener() {
-
-			@Override
-			public void itemStateChanged(ItemEvent arg0) {
-				// TODO 自动生成的方法存根
-				if (comboBox.getSelectedIndex() == 0) {
-					mineQTY = 5;
-					ttlCol = 10;
-					ttlRow = 10;
-					blockSize = 30;
-
-					mineBox.setText(Integer.toString(mineQTY));
-					colBox.setText(Integer.toString(ttlCol));
-					rowBox.setText(Integer.toString(ttlRow));
-					try {
-						Thread.sleep(300);
-					} catch (InterruptedException e) {
-						// TODO 自动生成的 catch 块
-						e.printStackTrace();
-					}
-					reset.doClick();
-				} else if (comboBox.getSelectedIndex() == 1) {
-					mineQTY = 10;
-					ttlCol = 10;
-					ttlRow = 10;
-					blockSize = 30;
-
-					mineBox.setText(Integer.toString(mineQTY));
-					colBox.setText(Integer.toString(ttlCol));
-					rowBox.setText(Integer.toString(ttlRow));
-					try {
-						Thread.sleep(500);
-					} catch (InterruptedException e) {
-						// TODO 自动生成的 catch 块
-						e.printStackTrace();
-					}
-					reset.doClick();
-				} else if (comboBox.getSelectedIndex() == 2) {
-					mineQTY = 50;
-					ttlCol = 20;
-					ttlRow = 10;
-					
-					blockSize = 25;
-					mineBox.setText(Integer.toString(mineQTY));
-					colBox.setText(Integer.toString(ttlCol));
-					rowBox.setText(Integer.toString(ttlRow));
-					try {
-						Thread.sleep(500);
-					} catch (InterruptedException e) {
-						// TODO 自动生成的 catch 块
-						e.printStackTrace();
-					}
-					reset.doClick();
-				}
-			}
-		});
+		comboBox.addItemListener(new SelectBox(this, comboBox));
 		
 		panel_2.add(reset);
-		reset.addActionListener(new ResetGame(panel_1, panel));
+		reset.addActionListener(new ResetGame(this, panel_1, panel));
 
 		// 初始化
 		init(panel_1);
 
 	}
 
-	private void init(JPanel panel_1) {
+	void init(JPanel panel_1) {
 		// 开始初始化
 		for (int r = 0; r < ttlRow; r++) {
 			for (int c = 0; c < ttlCol; c++) {
