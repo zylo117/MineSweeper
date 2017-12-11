@@ -122,6 +122,14 @@ final class LeftClick implements ActionListener {
 		System.out.println("remainingBlank" + remainingBlank);
 
 		if (safeMine == GameUI.mineQTY) {
+			for (int r = 0; r < GameUI.ttlRow; r++) {
+				for (int c = 0; c < GameUI.ttlCol; c++) {
+					// 锁死所有按钮，游戏结束
+					if (!GameUI.debug) {
+						GameUI.buttonSet[r][c].setEnabled(false);
+					}
+				}
+			}
 			System.out.println("你给我搞的这个比赛，一颗赛艇！");
 		}
 	}
