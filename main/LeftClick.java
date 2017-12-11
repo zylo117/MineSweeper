@@ -27,16 +27,25 @@ final class LeftClick implements ActionListener {
 
 		// statusMap[buttonRow][buttonCol] = 0;
 		System.out.println(GameUI.statusMap[buttonRow][buttonCol]);
-		GameUI.buttonSet[buttonRow][buttonCol].setEnabled(false);
 
-		if (GameUI.clickCount == 0) {
+		// 放置第一个雷，检测是不是右键标记的状态
+		if (GameUI.clickCount == 0 && GameUI.markMap[buttonRow][buttonCol] != 1) {
 			GameUI.firstPoint = new Point(buttonCol, buttonRow);
 			setMine(GameUI.firstPoint);
 		}
-		GameUI.clickCount++;
+		if (GameUI.markMap[buttonRow][buttonCol] != 1) {
+			GameUI.clickCount++;
 
-		// 对点击点以及其周围点判断
-		judgeThisBlock(buttonCol, buttonRow);
+			// 对点击点以及其周围点判断
+			judgeThisBlock(buttonCol, buttonRow);
+			
+		} else {
+			// 如果已被右键标记
+			GameUI.markMap[buttonRow][buttonCol] = 0;
+			final ImageIcon ico = new ImageIcon(System.getProperty("user.dir") + "\\res\\dirt_huaji.jpg");
+			ico.setImage(ico.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
+			GameUI.buttonSet[buttonRow][buttonCol].setIcon(ico);
+		}
 	}
 
 	private void judgeThisBlock(int buttonCol, int buttonRow) {

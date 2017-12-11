@@ -33,6 +33,13 @@ public class GameUI {
 	 * 9，点击，雷。炸了
 	 * 10,右键点击标记雷
 	 */
+	
+	public static int[][] markMap = new int[999][999];
+	/**
+	 * 状态图示意 
+	 * 0，未标记
+	 * 1，已标记
+	 */
 
 	private JFrame frame;
 

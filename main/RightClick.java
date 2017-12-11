@@ -23,11 +23,12 @@ final class RightClick extends MouseAdapter {
 			final ImageIcon ico = new ImageIcon(System.getProperty("user.dir") + "\\res\\flag.jpg");
 			ico.setImage(ico.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
 			GameUI.buttonSet[buttonRow][buttonCol].setIcon(ico);
+			GameUI.markMap[buttonRow][buttonCol] = 1;
 			
 //			 System.out.println(e.getSource().toString());
 //			 System.out.println(buttonRow);
 //			 System.out.println(buttonCol);
-//			 System.out.println(GameUI.statusMap[buttonRow][buttonCol]);
+			 System.out.println(GameUI.markMap[buttonRow][buttonCol]);
 			
 
 			// statusMap[buttonRow][buttonCol] = 0;
