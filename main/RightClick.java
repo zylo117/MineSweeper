@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -68,7 +69,17 @@ final class RightClick extends MouseAdapter {
 					}
 				}
 			}
-			System.out.println("你给我搞的这个比赛，一颗赛艇！");
+			popUpResult.result.setText("你给我搞的这个游戏啊，一颗赛艇！");
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try {
+						popUpResult window = new popUpResult();
+						window.frame.setVisible(true);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
 		}
 	}
 }

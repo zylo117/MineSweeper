@@ -22,9 +22,14 @@ import javax.swing.JRadioButton;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.SwingConstants;
+import java.awt.FlowLayout;
+import java.awt.Font;
 
 public class GameUI {
 
+	public static JLabel lblTip = new JLabel("Excited");
+	public static Thread tips = new Thread();
 	public static JButton reset = new JButton("Reset");
 	public static int ttlRow = 10;
 	public static int ttlCol = 10;
@@ -57,7 +62,7 @@ public class GameUI {
 	 * 1，已标记
 	 */
 
-	JFrame frame;
+	public static JFrame frame;
 	JTextField rowBox;
 	JTextField colBox;
 	JTextField mineBox;
@@ -145,10 +150,18 @@ public class GameUI {
 		panel_1.setLayout(new GridLayout(ttlRow, ttlCol, 0, 0));
 
 		JPanel statusBar = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) statusBar.getLayout();
+		flowLayout.setAlignment(FlowLayout.LEFT);
 		panel.add(statusBar, BorderLayout.SOUTH);
+		
+		JLabel laji = new JLabel("");
+		laji.setIcon(new ImageIcon(GameUI.class.getResource("/res/boom_laji.jpg")));
+		laji.setHorizontalAlignment(SwingConstants.CENTER);
+		statusBar.add(laji);
+		lblTip.setFont(new Font("宋体", Font.PLAIN, 10));
 
-		JLabel lblTip = new JLabel("Fuck You");
 		statusBar.add(lblTip);
+		dailyMojic(lblTip);
 
 		JComboBox comboBox = new JComboBox();
 		panel_2.add(comboBox);
@@ -160,7 +173,61 @@ public class GameUI {
 
 		// 初始化
 		init(panel_1);
+	}
 
+	private void dailyMojic(JLabel lblTip) {
+		tips = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO 自动生成的方法存根
+				while(true) {
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO 自动生成的 catch 块
+					e.printStackTrace();
+				}
+				lblTip.setText("我绝对不知道，我怎么就玩起了这个游戏");
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO 自动生成的 catch 块
+					e.printStackTrace();
+				}
+				lblTip.setText("闷声大发财，一个格都不踩，这是坠吼滴");
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO 自动生成的 catch 块
+					e.printStackTrace();
+				}
+				lblTip.setText("这次排雷任务，得到了全军几百名将军的一致通过");
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO 自动生成的 catch 块
+					e.printStackTrace();
+				}
+				lblTip.setText("你们啊，不要总想着搞个大爆炸，说我踩到地雷了");
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO 自动生成的 catch 块
+					e.printStackTrace();
+				}
+				lblTip.setText("识得唔识得玩啊");
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO 自动生成的 catch 块
+					e.printStackTrace();
+				}
+				}
+			}
+		});
+		
+		tips.start();
 	}
 
 	void init(JPanel panel_1) {

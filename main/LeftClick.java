@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -34,8 +35,8 @@ final class LeftClick implements ActionListener {
 			setMine(GameUI.firstPoint);
 			
 			// 如果一开始就按到空格，自动展开
-			if(judgeSurroundingIs(buttonCol, buttonRow, 9) == 0) {
-				reveal3x3Block(buttonCol, buttonRow);
+			if(GameUI.statusMap[buttonRow][buttonCol] == 0) {
+				autoRevealEmptyBlock(buttonCol, buttonRow);
 			}
 		}
 		if (GameUI.markMap[buttonRow][buttonCol] != 1) {
@@ -77,7 +78,19 @@ final class LeftClick implements ActionListener {
 			ico.setImage(ico.getImage().getScaledInstance(GameUI.blockSize,GameUI. blockSize, Image.SCALE_SMOOTH));
 			GameUI.buttonSet[buttonRow][buttonCol].setIcon(ico);
 			// System.out.println("YOU LOSE SUCKER!");
-			System.out.println("你输给了辣稽!");
+			System.out.println("很惭愧，只踩了一个微小的地雷");
+			
+			popUpResult.result.setText("很惭愧，只踩了一个微小的地雷");
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try {
+						popUpResult window = new popUpResult();
+						window.frame.setVisible(true);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
 		}
 
 		// 如果没有炸
@@ -123,8 +136,8 @@ final class LeftClick implements ActionListener {
 				}
 			}
 		}
-		System.out.println("safeMine" + safeMine);
-		System.out.println("remainingBlank" + remainingBlank);
+//		System.out.println("safeMine" + safeMine);
+//		System.out.println("remainingBlank" + remainingBlank);
 
 		if (safeMine == GameUI.mineQTY) {
 			for (int r = 0; r < GameUI.ttlRow; r++) {
@@ -135,12 +148,24 @@ final class LeftClick implements ActionListener {
 					}
 				}
 			}
-			System.out.println("你给我搞的这个比赛，一颗赛艇！");
+			System.out.println("你给我搞的这个游戏啊，一颗赛艇！");
+			
+			popUpResult.result.setText("你给我搞的这个游戏啊，一颗赛艇！");
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try {
+						popUpResult window = new popUpResult();
+						window.frame.setVisible(true);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
 		}
 	}
 
 	private void autoRevealEmptyBlock(int buttonCol, int buttonRow) {
-		if (GameUI.statusMap[buttonRow][buttonCol] == -1 || GameUI.statusMap[buttonRow][buttonCol] == 0) {
+		if (judgeSurroundingIs(buttonCol, buttonRow, 9) == 0) {
 			reveal3x3Block(buttonCol, buttonRow);
 		}
 	}
