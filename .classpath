@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry excluding="tool/MouseTest.java|tool/ClickTest.java|tool/GenerateHashRandomNumber.java|tool/RemoveDuplicateOffList.java|res/" kind="src" path=""/>
+	<classpathentry excluding="tool/MouseTest.java|tool/ClickTest.java|tool/GenerateHashRandomNumber.java|tool/RemoveDuplicateOffList.java" kind="src" path=""/>
 	<classpathentry kind="output" path=""/>
 </classpath>

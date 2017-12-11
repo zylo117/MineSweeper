@@ -26,7 +26,7 @@ final class LeftClick implements ActionListener {
 		// System.out.println(statusMap[buttonRow][buttonCol]);
 
 		// statusMap[buttonRow][buttonCol] = 0;
-		System.out.println(GameUI.statusMap[buttonRow][buttonCol]);
+		System.out.println("CurrentPoint:" + GameUI.statusMap[buttonRow][buttonCol]);
 
 		// 放置第一个雷，检测是不是右键标记的状态
 		if (GameUI.clickCount == 0 && GameUI.markMap[buttonRow][buttonCol] != 1) {
@@ -38,13 +38,14 @@ final class LeftClick implements ActionListener {
 
 			// 对点击点以及其周围点判断
 			judgeThisBlock(buttonCol, buttonRow);
-			
+
 		} else {
 			// 如果已被右键标记
 			GameUI.markMap[buttonRow][buttonCol] = 0;
-			final ImageIcon ico = new ImageIcon(System.getProperty("user.dir") + "\\res\\dirt_huaji.jpg");
+			final ImageIcon ico = new ImageIcon(GameUI.class.getResource("..\\res\\dirt_huaji.jpg"));
 			ico.setImage(ico.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
 			GameUI.buttonSet[buttonRow][buttonCol].setIcon(ico);
+			GameUI.markChance++;
 		}
 	}
 
@@ -57,7 +58,7 @@ final class LeftClick implements ActionListener {
 					// 把其余所有没有点击的地雷灰度图显示出来，以示公平
 					if (GameUI.statusMap[r][c] == 9) {
 						final ImageIcon ico2 = new ImageIcon(
-								System.getProperty("user.dir") + "\\res\\unrevealed_boom_laji.jpg");
+								GameUI.class.getResource("..\\res\\unrevealed_boom_laji.jpg"));
 						ico2.setImage(ico2.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
 						GameUI.buttonSet[r][c].setIcon(ico2);
 					}
@@ -68,15 +69,16 @@ final class LeftClick implements ActionListener {
 				}
 			}
 			// 标出你踩的雷，boom
-			final ImageIcon ico = new ImageIcon(System.getProperty("user.dir") + "\\res\\boom_laji.jpg");
+			final ImageIcon ico = new ImageIcon(GameUI.class.getResource("..\\res\\boom_laji.jpg"));
 			ico.setImage(ico.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
 			GameUI.buttonSet[buttonRow][buttonCol].setIcon(ico);
-			System.out.println("YOU LOSE SUCKER!");
+//			System.out.println("YOU LOSE SUCKER!");
+			System.out.println("你输给了辣稽!");
 		}
 
 		// 如果没有炸
 		if (GameUI.statusMap[buttonRow][buttonCol] == -1) {
-			final ImageIcon ico = new ImageIcon(System.getProperty("user.dir") + "\\res\\empty.jpg");
+			final ImageIcon ico = new ImageIcon(GameUI.class.getResource("..\\res\\empty.jpg"));
 			ico.setImage(ico.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
 			GameUI.buttonSet[buttonRow][buttonCol].setIcon(ico);
 			GameUI.buttonSet[buttonRow][buttonCol].setEnabled(false);
@@ -85,17 +87,43 @@ final class LeftClick implements ActionListener {
 			// 判断九宫格内是否有炸
 			final int surroundingMines = judgeSurroundingIs(buttonCol, buttonRow, 9);
 
-			System.out.println(surroundingMines);
+			System.out.println("surroundingMines" + surroundingMines);
 			GameUI.statusMap[buttonRow][buttonCol] = surroundingMines;
 
-			final ImageIcon num = new ImageIcon(
-					System.getProperty("user.dir") + "\\res\\number\\" + surroundingMines + ".jpg");
-			num.setImage(num.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
-			GameUI.buttonSet[buttonRow][buttonCol].setIcon(num);
-			GameUI.buttonSet[buttonRow][buttonCol].setEnabled(false);
+			if (surroundingMines > 0) {
+				final ImageIcon num = new ImageIcon(
+						GameUI.class.getResource("..\\res\\number\\" + surroundingMines + ".jpg"));
+				num.setImage(num.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
+				GameUI.buttonSet[buttonRow][buttonCol].setIcon(num);
+				GameUI.buttonSet[buttonRow][buttonCol].setEnabled(false);
+			}
 
 			// 自动展开到最近有数字的区域
 			autoRevealEmptyBlock(buttonCol, buttonRow);
+		}
+		
+		judgeWin();
+	}
+
+	private void judgeWin() {
+		// 判断胜利
+		int safeMine = 0;
+		int remainingBlank = 0;
+		for (int r = 0; r < GameUI.ttlRow; r++) {
+			for (int c = 0; c < GameUI.ttlCol; c++) {
+				if (GameUI.statusMap[r][c] == 9 && GameUI.markMap[r][c] == 1) {
+					safeMine++;
+				}
+				if(GameUI.statusMap[r][c] == -1) {
+					remainingBlank++;
+				}
+			}
+		}
+		System.out.println("safeMine" + safeMine);
+		System.out.println("remainingBlank" + remainingBlank);
+
+		if(safeMine == GameUI.mineQTY) {
+			System.out.println("你给我搞的这个比赛，一颗赛艇！");
 		}
 	}
 
@@ -325,7 +353,7 @@ final class LeftClick implements ActionListener {
 		}
 
 		if (GameUI.debug) {
-			System.out.println(mineLocationSet);
+			System.out.println("Mine:" + mineLocationSet);
 		}
 	}
 }
