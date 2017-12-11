@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Window.Type;
 
-public class popUpResult {
+public class PopUpResult {
 
 	public static JLabel result = new JLabel("还是要提高自己的姿势水平啊");
 	public JDialog frame;
@@ -21,7 +21,7 @@ public class popUpResult {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					popUpResult window = new popUpResult();
+					PopUpResult window = new PopUpResult();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -33,7 +33,7 @@ public class popUpResult {
 	/**
 	 * Create the application.
 	 */
-	public popUpResult() {
+	public PopUpResult() {
 		initialize();
 	}
 
