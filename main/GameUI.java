@@ -49,6 +49,7 @@ public class GameUI {
 	public static boolean ifDeployed = false;
 	public static boolean ifReset = false, ifFinish = false;
 	public static int blockSize = 30;
+	public static JLabel lblMark = new JLabel("    Flag: " + mineQTY);
 
 	public static int[][] statusMap = new int[999][999];
 	/**
@@ -158,6 +159,9 @@ public class GameUI {
 		panel_3.add(mineBox);
 		mineBox.setColumns(2);
 		mineBox.setText(String.valueOf(mineQTY));
+		lblMark.setFont(new Font("Calibri", Font.PLAIN, 12));
+		
+		panel_3.add(lblMark);
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(0, 0, blockSize * ttlCol, blockSize * ttlRow);

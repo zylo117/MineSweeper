@@ -38,6 +38,7 @@ final class ResetGame implements ActionListener {
 				GameUI.clickCount = 0;
 				GameUI.firstPoint = new Point();
 				GameUI.mineQTY = GameUI.markChance = Integer.parseInt(ResetGame.this.gameUI.mineBox.getText());
+				GameUI.lblMark.setText("    Flag: " + Integer.toString(GameUI.markChance));
 				GameUI.ttlCol = Integer.parseInt(ResetGame.this.gameUI.colBox.getText());
 				GameUI.ttlRow = Integer.parseInt(ResetGame.this.gameUI.rowBox.getText());
 				GameUI.buttonSet = new JButton[GameUI.ttlRow][GameUI.ttlCol];

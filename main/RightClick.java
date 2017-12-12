@@ -27,6 +27,7 @@ final class RightClick extends MouseAdapter {
 				GameUI.buttonSet[buttonRow][buttonCol].setIcon(ico);
 				GameUI.markMap[buttonRow][buttonCol] = 1;
 				GameUI.markChance--;
+				GameUI.lblMark.setText("    Flag: " + Integer.toString(GameUI.markChance));
 
 				// System.out.println(e.getSource().toString());
 				// System.out.println(buttonRow);
