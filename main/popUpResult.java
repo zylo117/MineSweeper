@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Window.Type;
+import java.awt.Font;
 
 public class PopUpResult {
 
@@ -47,6 +48,7 @@ public class PopUpResult {
 		frame.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 		frame.setAlwaysOnTop(true);
+		result.setFont(new Font("微软雅黑", Font.BOLD, 16));
 		result.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		frame.getContentPane().add(result, BorderLayout.CENTER);
