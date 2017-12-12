@@ -31,6 +31,8 @@ final class ResetGame implements ActionListener {
 			public void run() {
 				// TODO 自动生成的方法存根
 				panel_1.removeAll();
+				GameUI.ifReset = true;
+				GameUI.ifFinish = false;
 				GameUI.statusMap = new int[999][999];
 				GameUI.markMap = new int[999][999];
 				GameUI.clickCount = 0;

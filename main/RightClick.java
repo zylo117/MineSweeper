@@ -69,6 +69,8 @@ final class RightClick extends MouseAdapter {
 					}
 				}
 			}
+			
+			GameUI.ifFinish = true;
 			PopUpResult.result.setText("你给我搞的这个游戏啊，一颗赛艇！");
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {

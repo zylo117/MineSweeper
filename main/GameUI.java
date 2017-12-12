@@ -16,6 +16,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JTextField;
 
 import java.sql.Time;
+import java.util.Date;
 import java.util.Timer;
 
 import javax.swing.JRadioButton;
@@ -31,6 +32,9 @@ import javax.swing.UIManager;
 public class GameUI {
 
 	public static JLabel lblTip = new JLabel("Excited");
+	public static JLabel lblTime = new JLabel("    Time");
+	public static Date firstTime;
+	public static int ttlSecond = 0;
 	public static Thread tips = new Thread();
 	public static JButton reset = new JButton("Reset");
 	public static int ttlRow = 10;
@@ -39,11 +43,11 @@ public class GameUI {
 	public static boolean debug = false;
 	public static JButton[][] buttonSet = new JButton[ttlRow][ttlCol];
 	public static int clickCount = 0;
-	public static Point firstPoint;
+	public static Point firstPoint = new Point(-1, -1);
 	public static JButton currentButton;
 	public static boolean initFinished = false;
 	public static boolean ifDeployed = false;
-	public static boolean ifReset = false;
+	public static boolean ifReset = false, ifFinish = false;
 	public static int blockSize = 30;
 
 	public static int[][] statusMap = new int[999][999];
@@ -183,6 +187,9 @@ public class GameUI {
 		reset.setFont(new Font("Calibri", Font.PLAIN, 12));
 		
 		panel_2.add(reset);
+		
+		panel_2.add(lblTime);
+
 		reset.addActionListener(new ResetGame(this, panel_1, panel));
 
 		// 初始化
