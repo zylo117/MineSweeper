@@ -55,7 +55,7 @@ final class SelectBox implements ItemListener {
 			}
 			GameUI.reset.doClick();
 		} else if (comboBox.getSelectedIndex() == 2) {
-			GameUI.mineQTY = 50;
+			GameUI.mineQTY = 20;
 			GameUI.clickCount = 0;
 			GameUI.ttlCol = 20;
 			GameUI.ttlRow = 10;

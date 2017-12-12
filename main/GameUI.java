@@ -25,6 +25,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.SwingConstants;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Toolkit;
+import javax.swing.UIManager;
 
 public class GameUI {
 
@@ -95,6 +97,8 @@ public class GameUI {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.setTitle("\u819C\u6CD5\u626B\u96F7");
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(GameUI.class.getResource("/res/ico.png")));
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
@@ -115,31 +119,38 @@ public class GameUI {
 		function.add(panel_2);
 
 		JLabel lblDifficulty = new JLabel("Difficulty");
+		lblDifficulty.setFont(new Font("Calibri", Font.PLAIN, 12));
 		panel_2.add(lblDifficulty);
 
 		JPanel panel_3 = new JPanel();
 		function.add(panel_3);
 
 		JLabel lblRows = new JLabel("Rows");
+		lblRows.setFont(new Font("Calibri", Font.PLAIN, 12));
 		panel_3.add(lblRows);
 
 		rowBox = new JTextField();
+		rowBox.setFont(new Font("Calibri", Font.PLAIN, 12));
 		panel_3.add(rowBox);
 		rowBox.setColumns(2);
 		rowBox.setText(String.valueOf(ttlRow));
 
 		JLabel lblCols = new JLabel("Cols");
+		lblCols.setFont(new Font("Calibri", Font.PLAIN, 12));
 		panel_3.add(lblCols);
 
 		colBox = new JTextField();
+		colBox.setFont(new Font("Calibri", Font.PLAIN, 12));
 		panel_3.add(colBox);
 		colBox.setColumns(2);
 		colBox.setText(String.valueOf(ttlCol));
 
 		JLabel lblMines = new JLabel("Mines");
+		lblMines.setFont(new Font("Calibri", Font.PLAIN, 12));
 		panel_3.add(lblMines);
 
 		mineBox = new JTextField();
+		mineBox.setFont(new Font("Calibri", Font.PLAIN, 12));
 		panel_3.add(mineBox);
 		mineBox.setColumns(2);
 		mineBox.setText(String.valueOf(mineQTY));
@@ -151,22 +162,25 @@ public class GameUI {
 
 		JPanel statusBar = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) statusBar.getLayout();
+		flowLayout.setVgap(2);
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		panel.add(statusBar, BorderLayout.SOUTH);
 		
 		JLabel laji = new JLabel("");
-		laji.setIcon(new ImageIcon(GameUI.class.getResource("/res/boom_laji.jpg")));
+		laji.setIcon(new ImageIcon(GameUI.class.getResource("/res/ico.png")));
 		laji.setHorizontalAlignment(SwingConstants.CENTER);
 		statusBar.add(laji);
-		lblTip.setFont(new Font("宋体", Font.PLAIN, 10));
+		lblTip.setFont(new Font("微软雅黑", Font.PLAIN, 11));
 
 		statusBar.add(lblTip);
 		dailyMojic(lblTip);
 
 		JComboBox comboBox = new JComboBox();
+		comboBox.setFont(new Font("Calibri", Font.PLAIN, 12));
 		panel_2.add(comboBox);
 		comboBox.setModel(new DefaultComboBoxModel(new String[] { "Easy", "Medium", "Hard", "Custom" }));
 		comboBox.addItemListener(new SelectBox(this, comboBox));
+		reset.setFont(new Font("Calibri", Font.PLAIN, 12));
 		
 		panel_2.add(reset);
 		reset.addActionListener(new ResetGame(this, panel_1, panel));
