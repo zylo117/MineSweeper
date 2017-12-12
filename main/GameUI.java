@@ -187,6 +187,7 @@ public class GameUI {
 		reset.setFont(new Font("Calibri", Font.PLAIN, 12));
 		
 		panel_2.add(reset);
+		lblTime.setFont(new Font("Calibri", Font.PLAIN, 12));
 		
 		panel_2.add(lblTime);
 
