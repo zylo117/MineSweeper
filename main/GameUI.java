@@ -50,6 +50,7 @@ public class GameUI {
 	public static boolean ifReset = false, ifFinish = false;
 	public static int blockSize = 30;
 	public static JLabel lblMark = new JLabel("    Flag: " + mineQTY);
+	public static final ImageIcon ico = new ImageIcon(GameUI.class.getResource("/res/dirt_huaji.jpg"));
 
 	public static int[][] statusMap = new int[999][999];
 	/**
@@ -266,7 +267,6 @@ public class GameUI {
 
 				panel_1.add(buttonSet[r][c]);
 				buttonSet[r][c].setUI(new MyButtonUI());
-				final ImageIcon ico = new ImageIcon(GameUI.class.getResource("/res/dirt_huaji.jpg"));
 				ico.setImage(ico.getImage().getScaledInstance(blockSize, blockSize, Image.SCALE_SMOOTH));
 				buttonSet[r][c].setIcon(ico);
 

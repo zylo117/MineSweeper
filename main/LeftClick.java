@@ -70,6 +70,7 @@ final class LeftClick implements ActionListener {
 			ico.setImage(ico.getImage().getScaledInstance(GameUI.blockSize, GameUI.blockSize, Image.SCALE_SMOOTH));
 			GameUI.buttonSet[buttonRow][buttonCol].setIcon(ico);
 			GameUI.markChance++;
+			GameUI.lblMark.setText("    Flag: " + Integer.toString(GameUI.markChance));
 		}
 	}
 

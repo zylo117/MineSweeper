@@ -31,6 +31,7 @@ final class ResetGame implements ActionListener {
 			public void run() {
 				// TODO 自动生成的方法存根
 				panel_1.removeAll();
+
 				GameUI.ifReset = true;
 				GameUI.ifFinish = false;
 				GameUI.statusMap = new int[999][999];
@@ -44,6 +45,10 @@ final class ResetGame implements ActionListener {
 				GameUI.buttonSet = new JButton[GameUI.ttlRow][GameUI.ttlCol];
 				ResetGame.this.gameUI.frame.setBounds(100, 100, GameUI.blockSize * GameUI.ttlCol + 10, GameUI.blockSize * GameUI.ttlRow + 130);
 				panel.setBounds(0, 0, GameUI.blockSize * GameUI.ttlCol + 10, GameUI.blockSize * GameUI.ttlRow + 130);
+					
+				// 清理内存
+//				System.gc();		
+				
 				ResetGame.this.gameUI.init(panel_1);
 			}
 		}).start();

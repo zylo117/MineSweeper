@@ -21,7 +21,7 @@ final class RightClick extends MouseAdapter {
 			buttonRow = buttonRow / Integer.parseInt(buttonSize[1]);
 
 			// 标出你要标记的雷，不会boom，次数有限
-			if (GameUI.markChance > 0 && (GameUI.statusMap[buttonRow][buttonCol] == -1 || GameUI.statusMap[buttonRow][buttonCol] == 9)) {
+			if (GameUI.markChance > 0 && GameUI.markMap[buttonRow][buttonCol] == 0 && (GameUI.statusMap[buttonRow][buttonCol] == -1 || GameUI.statusMap[buttonRow][buttonCol] == 9)) {
 				final ImageIcon ico = new ImageIcon(GameUI.class.getResource("/res/flag.jpg"));
 				ico.setImage(ico.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
 				GameUI.buttonSet[buttonRow][buttonCol].setIcon(ico);
