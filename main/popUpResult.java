@@ -7,6 +7,9 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
 import java.awt.Window.Type;
 import java.awt.Font;
 
@@ -19,6 +22,14 @@ public class PopUpResult {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		String lookAndFeel = "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel";
+		try {
+			UIManager.setLookAndFeel(lookAndFeel);
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e1) {
+			// TODO 自动生成的 catch 块
+			e1.printStackTrace();
+		}
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {

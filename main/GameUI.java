@@ -28,6 +28,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Toolkit;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 public class GameUI {
 
@@ -79,6 +80,15 @@ public class GameUI {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		String lookAndFeel = "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel";
+		try {
+			UIManager.setLookAndFeel(lookAndFeel);
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e1) {
+			// TODO 自动生成的 catch 块
+			e1.printStackTrace();
+		}
+		
 		EventQueue.invokeLater(() -> {
 			try {
 				final GameUI window = new GameUI();
