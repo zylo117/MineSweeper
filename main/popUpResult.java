@@ -45,6 +45,7 @@ public class PopUpResult {
 		frame = new JDialog(GameUI.frame, "人生的经验");
 		frame.setType(Type.POPUP);
 		frame.setBounds(50, 200, 400, 100);
+		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 		frame.setAlwaysOnTop(true);
